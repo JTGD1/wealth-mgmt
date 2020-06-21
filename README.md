@@ -2,7 +2,7 @@
 
 Software to aid in reporting on and monitoring of financial asset allocation and portfolio performance for Financial Advisors
 
-    Copyright (C) <2020>  <Justin Davda>
+    Copyright (C) 2020  Justin Davda
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
