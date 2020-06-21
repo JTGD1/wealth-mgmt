@@ -1,9 +1,6 @@
-#requirements.txt
+#packages needed for Wealth Mgmt app
 
-#Packages Required
 
-operator
-csv
 plotly
 os
 itertools
@@ -16,3 +13,5 @@ requests
 sendgrid==6.0.5
 flask
 gunicorn
+operator
+csv
