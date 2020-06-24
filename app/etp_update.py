@@ -20,6 +20,8 @@ def to_usd(my_price):
     return f"${my_price: , .2f}"
 
 
+
+
 #load list of exchange traded products held
 
 #import csv file
@@ -30,13 +32,14 @@ etp = df.to_dict("records")
 stock_list = [s["Ticker"] for s in etp]
 
 # evaluate ETPs held with latest price data
+MV_API = os.getenv("MV_API")
 
 for stock in stock_list:
 
     # make API request for stock prices
 
     request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + \
-        stock+"&outputsize=compact&apikey=4E09ZJ6HEW1R7V41"
+        stock+"&outputsize=compact&apikey="+str(MV_API)
     response = requests.get(request_url)
 
     response_data = json.loads(response.text)
@@ -96,8 +99,8 @@ for stock in stock_list:
         send_alert = True
     elif percent_change >= 5 or percent_change <= -5:
         send_alert = True
-    else:
-        send_alert = False
+    #else:
+    #    send_alert = False
     
     #create table of alerts
     alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
