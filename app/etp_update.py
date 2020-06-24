@@ -14,6 +14,9 @@ load_dotenv()
 import pandas as pd 
 from scipy import stats
 
+from app import CLIENT_NAME
+from app.email_service import send_email
+
 #define basic functions
 
 def to_usd(my_price):
@@ -33,6 +36,10 @@ stock_list = [s["Ticker"] for s in etp]
 
 # evaluate ETPs held with latest price data
 MV_API = os.getenv("MV_API")
+
+#create dictionary to be used to store stock alerts
+alerts = []
+alerts.append({"Ticker": "Ticker", "% Change": "% Change", "Z Score": "Z Score"})
 
 for stock in stock_list:
 
@@ -81,7 +88,7 @@ for stock in stock_list:
     df.loc[df["Ticker"] == stock, ["Last Price"]] = last_close
 
     #check if price has moved significantly
-    alerts = []   
+      
     close_prices = []
 
     for date in dates:
@@ -95,15 +102,17 @@ for stock in stock_list:
     z_score = z_scores[-1]
     
     
-    if z_score >= 2.5 or z_score <= -2.5:
+    if z_score >= 0.025 or z_score <= -0.025:
         send_alert = True
-    elif percent_change >= 5 or percent_change <= -5:
+        alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
+    elif percent_change >= 0.05 or percent_change <= -0.05:
         send_alert = True
+        alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
     #else:
     #    send_alert = False
     
-    #create table of alerts
-    alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
+    #add to dictionary of alerts
+    #alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
     
     
 
@@ -111,4 +120,24 @@ for stock in stock_list:
 
 df.to_csv(csv_filepath, index = False, header = True)
 
+#send email if needed
 
+if __name__ == "__main__":
+
+    if send_alert == True:
+        
+        html = ""
+        html += f"<h3>Good evening {CLIENT_NAME},</h3>"
+
+        html += "<h4>Today's Date</h4>"
+        html += f"<p>{date.today().strftime('%A, %B %d, %Y')}</p>"
+
+        html += f"<h4>This is a large price change alert on your stock and ETF portfolio</h4>"
+        html += f"<h3>No action is needed from you, but you may wish to take a look at these positions:</h3>"
+        html += f"<h2>[Please contact your Financial Advisor for more information]</h2>"
+        html += "<ul>"
+        for stock in alerts:
+            html += f"<li>{stock['Ticker']} | {stock['% Change']} | {stock['Z Score'].upper()}</li>"
+        html += "</ul>"
+
+        send_email(subject="Important Portfolio Update: Large Price Change Alert", html=html)

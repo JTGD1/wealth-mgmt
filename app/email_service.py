@@ -43,9 +43,6 @@ if __name__ == "__main__":
         <li>WORK | +20%</li>
         <li>ZM | +44%</li>
     </ul>
-
-    <h4>My Forecast</h4>
-    
     """
 
     send_email(example_subject, example_html)
