@@ -1,3 +1,4 @@
-Type,Name,Owner,Current Value
-Mortgage,Brooklyn,Justin,350000
-Credit Card,Chase,Justin,3000
+Asset Class,Type,Name,Owner,Current Value
+Real Estate,Mortgage,Brooklyn,Justin,350000
+Cash,Credit Card,Chase,Justin,3000
+Cash,Credit Card,Chase,Logan,1000
