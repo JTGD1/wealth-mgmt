@@ -6,7 +6,11 @@
 import os
 import csv
 import pandas as pd 
-
+from datetime import datetime
+import altair as alt
+import plotly
+import plotly.graph_objects as go
+import plotly.express as px
 
 #create current asset allocation and net worth reporting
 
@@ -37,3 +41,23 @@ df_net_assets = pd.concat([df_assets_by_asset, df_liabilities_by_asset],axis=0)
 df_net_assets = df_net_assets.groupby("Asset Class").sum().reset_index()
 pd.options.display.float_format = '${:,.2f}'.format
 print(df_net_assets.head())
+
+#write data to records
+net_worth_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "net_worth_history.csv")
+date = datetime.now().strftime("%m/%d/%Y")
+df_net_assets.insert(0, "Date", date)
+print(df_net_assets.head())
+df_net_assets.to_csv(net_worth_filepath, mode="a", header=False, index=False)
+
+#create charts
+
+#allocation = alt.Chart(df_net_assets).mark_bar().encode(
+#    x="Asset Class",
+#    y="Current Value"
+#)
+#allocation.show()
+
+fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",
+ title="Current Asset Allocation as of "+date, hover_data=["Current Value"], labels=["Asset Class"])
+fig.update_traces(textposition="inside", textinfo="value+label")
+fig.show()

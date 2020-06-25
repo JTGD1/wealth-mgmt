@@ -4,7 +4,7 @@
 #initialise things
 
 from statistics import mean
-import datetime
+from datetime import datetime
 import csv
 import requests
 import os
@@ -14,8 +14,8 @@ load_dotenv()
 import pandas as pd 
 from scipy import stats
 
-from app import CLIENT_NAME
 from app.email_service import send_email
+from app import CLIENT_NAME
 
 #define basic functions
 
@@ -72,7 +72,7 @@ for stock in stock_list:
         print("API call failure - Data for Ticker =",
               stock, "not found.  lease check ticker is correct in the csv file and try again.")
         continue
-
+        
     # extract data from json response
     tsd = response_data["Time Series (Daily)"]
     dates = list(tsd.keys())
@@ -122,6 +122,10 @@ df.to_csv(csv_filepath, index = False, header = True)
 
 #send email if needed
 
+#CLIENT_NAME = os.getenv("CLIENT_NAME")
+
+print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+
 if __name__ == "__main__":
 
     if send_alert == True:
@@ -130,7 +134,8 @@ if __name__ == "__main__":
         html += f"<h3>Good evening {CLIENT_NAME},</h3>"
 
         html += "<h4>Today's Date</h4>"
-        html += f"<p>{date.today().strftime('%A, %B %d, %Y')}</p>"
+        #html += f"<p>{date.today().strftime('%A, %B %d, %Y')}</p>"
+        html += f"<p>{datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}</p>"
 
         html += f"<h4>This is a large price change alert on your stock and ETF portfolio</h4>"
         html += f"<h3>No action is needed from you, but you may wish to take a look at these positions:</h3>"
