@@ -124,25 +124,22 @@ df.to_csv(csv_filepath, index = False, header = True)
 
 #CLIENT_NAME = os.getenv("CLIENT_NAME")
 
-print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+print(datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
-    if send_alert == True:
-        
-        html = ""
-        html += f"<h3>Good evening {CLIENT_NAME},</h3>"
-
-        html += "<h4>Today's Date</h4>"
-        #html += f"<p>{date.today().strftime('%A, %B %d, %Y')}</p>"
-        html += f"<p>{datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}</p>"
-
-        html += f"<h4>This is a large price change alert on your stock and ETF portfolio</h4>"
-        html += f"<h3>No action is needed from you, but you may wish to take a look at these positions:</h3>"
-        html += f"<h2>[Please contact your Financial Advisor for more information]</h2>"
-        html += "<ul>"
-        for stock in alerts:
-            html += f"<li>{stock['Ticker']} | {stock['% Change']} | {stock['Z Score'].upper()}</li>"
-        html += "</ul>"
-
-        send_email(subject="Important Portfolio Update: Large Price Change Alert", html=html)
+if send_alert == True:
+    
+    html = ""
+    html += f"<h3>Good evening {CLIENT_NAME},</h3>"
+    html += "<h4>Today's Date</h4>"
+    #html += f"<p>{date.today().strftime('%A, %B %d, %Y')}</p>"
+    html += f"<p>{datetime.now().strftime('%m/%d/%Y, %H:%M:%S')}</p>"
+    html += f"<h4>This is a large price change alert on your stock and ETF portfolio</h4>"
+    html += f"<h3>No action is needed from you, but you may wish to take a look at these positions:</h3>"
+    html += f"<h2>[Please contact your Financial Advisor for more information]</h2>"
+    html += "<ul>"
+    for stock in alerts:
+        html += f"<li>{stock['Ticker']} | {stock['% Change']} | {str(stock['Z Score']).upper()}</li>"
+    html += "</ul>"
+    send_email(subject="Important Portfolio Update: Large Price Change Alert", html=html)

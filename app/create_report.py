@@ -40,24 +40,32 @@ df_assets_by_asset = df_assets_by_asset.append(etp_assets_row, ignore_index=True
 df_net_assets = pd.concat([df_assets_by_asset, df_liabilities_by_asset],axis=0)
 df_net_assets = df_net_assets.groupby("Asset Class").sum().reset_index()
 pd.options.display.float_format = '${:,.2f}'.format
-print(df_net_assets.head())
+#print(df_net_assets.head())
 
 #write data to records
-net_worth_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "net_worth_history.csv")
 date = datetime.now().strftime("%m/%d/%Y")
-df_net_assets.insert(0, "Date", date)
-print(df_net_assets.head())
-df_net_assets.to_csv(net_worth_filepath, mode="a", header=False, index=False)
+net_worth_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "net_worth_history.csv")
+df_net_worth = pd.read_csv(net_worth_filepath)
+#print(df_net_worth.head())
+last_date = df_net_worth.iloc[-1]["Date"]
+
+if last_date == date:
+    print("File is up to date")
+else:
+    df_net_assets.insert(0, "Date", date)
+    #print(df_net_assets.head())
+    df_net_assets.to_csv(net_worth_filepath, mode="a", header=False, index=False)
 
 #create charts
 
-#allocation = alt.Chart(df_net_assets).mark_bar().encode(
-#    x="Asset Class",
-#    y="Current Value"
-#)
-#allocation.show()
+history = alt.Chart(df_net_worth).mark_bar().encode(
+    x="Date",
+    y="Current Value",
+    color="Asset Class"
+)
+history.show()
 
-fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",
- title="Current Asset Allocation as of "+date, hover_data=["Current Value"], labels=["Asset Class"])
-fig.update_traces(textposition="inside", textinfo="value+label")
-fig.show()
+#fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",
+# title="Current Asset Allocation as of "+date, hover_data=["Current Value"], labels=["Asset Class"])
+#fig.update_traces(textposition="inside", textinfo="value+label")
+#fig.show()
