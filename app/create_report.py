@@ -65,7 +65,7 @@ history = alt.Chart(df_net_worth).mark_bar().encode(
 )
 history.show()
 
-#fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",
-# title="Current Asset Allocation as of "+date, hover_data=["Current Value"], labels=["Asset Class"])
-#fig.update_traces(textposition="inside", textinfo="value+label")
-#fig.show()
+fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",
+ title="Current Asset Allocation as of "+date, hover_data=["Current Value"], labels=["Asset Class"])
+fig.update_traces(textposition="inside", textinfo="value+label")
+fig.show()
