@@ -1,54 +1,72 @@
 #update_files.py
 
-#web app to allow for updating of csv files containing financial records
+# to allow for updating of csv files containing financial records
 
+#with help from https://medium.com/swlh/adding-and-updating-data-in-csv-file-via-flask-api-252babbc6381
+import os
 import pandas as pd 
- 
-def addETP(asset_class,ticker,units,purchase_price):
-# Creating the first Dataframe using dictionary 
- isThere = False
- 
-# Creating the first Dataframe using dictionary 
-etp_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "exchange_traded_products.csv")
-df_etp = pd.read_csv(etp_filepath)
- 
-try:
-new_asset_class = str(asset_class)
-new_ticker = str(ticker)
-new_units = int(units)
-new_purchase_price = float(round(purchase_price,2))
-print(new_asset_class,new_ticker,new_units,new_purchase_price)
 
-if( 0 > new_units or new_purchase_price < 0):
-invalid = “invalid”
-return invalid
 
-except ValueError:
-error = “error”
-return error
+def update_ETP(asset_class,ticker,units,purchase_price):
+    #pull in data from csv
+    isThere = False 
+    etp_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "exchange_traded_products.csv")
+    df_etp = pd.read_csv(etp_filepath)
+    
+    try:
+        check_asset_class = str(asset_class)
+        check_ticker = str(ticker)
+        check_units = int(units)
+        check_purchase_price = float(purchase_price)
+        
+        if 0 > check_units or check_purchase_price < 0:
+            invalid = "Invalid number - please check and try again"
+            #print(invalid)
+            return invalid            
 
-for index, row in df_etp.iterrows(): 
-    print(row[‘Asset Class’], row[‘Ticker’]) 
-    if str(row[‘Asset Class’]) == str(asset_class) and str(row[‘Ticker’]) == str(ticker):
-        row['Units'] = units 
-        row['Purchase Price'] = purchase_price
-        isThere = True
+    except ValueError:
+        error = "Invalid format - please check and try again"
+        #print(error)
+        return error        
 
-#Creating the Second Dataframe using dictionary 
+    for ind in df_etp.index:   
+        if df_etp["Ticker"][ind] == ticker:              
 
-if isThere != True: 
+        #if ticker already exists, just update units, purchase price
+        
+            df_etp.loc[df_etp["Ticker"] == ticker, ["Units"]] = units
+            df_etp.loc[df_etp["Ticker"] == ticker, ["Purchase Price"]] = round(purchase_price,2)
+            isThere = True
+    
+        #if ticker doesn't exist, add it to the end
 
-df2 = pd.DataFrame({“user-id”:[userId], 
-“event-id”:[eventId], 
-“rating”:[rating]}) 
+        if isThere != True:
+            df2 = pd.DataFrame({"Asset Class":[asset_class], 
+            "Ticker":[ticker], 
+            "Units":[units],"Purchase Price":[purchase_price]}) 
 
-dff = df1.append(df2, ignore_index = True)
-dff.to_csv(r’./rating.csv’, index = False)
+            dff = df_etp.append(df2, ignore_index = True)
+            dff.to_csv(etp_filepath, index = False)
 
-add = “added”
-return add
+            action = "added"            
+            
+        else:
+            
+            df_etp.to_csv(etp_filepath, index = False) 
+            action = "updated"
+        
+    #print(ticker,action)
+    return action   
 
-else:
-df1.to_csv(r’./rating.csv’, index = False) 
-update = “updated”
-return update
+def delete_ETP(ticker):
+    isThere = False
+    etp_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "exchange_traded_products.csv")
+    df_etp = pd.read_csv(etp_filepath)
+
+    try:
+        check_ticker = str(ticker)
+        
+    except ValueError:
+        error = "Invalid format - please check and try again"
+        print(error)
+        return error

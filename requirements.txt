@@ -15,3 +15,6 @@ flask
 gunicorn
 operator
 csv
+altair
+altair_viewer
+scipy
