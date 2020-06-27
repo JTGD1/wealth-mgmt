@@ -1,5 +1,5 @@
-Asset Class,Name,Owner,Purchase Value,Current Value
-Real Estate,Brooklyn,Justin,500000,550000
-Cash,HSBC,Justin,,1000
-Cash,Chase,Logan,,250
-Equity,Palintir,Logan,250000,350000
+Asset Class,Identifier,Purchase Value,Current Value
+Real Estate,Brooklyn,500000,550000
+Cash,HSBC (Justin),,1000
+Cash,Chase (Logan),,250
+Equity,Palintir,250000,350000

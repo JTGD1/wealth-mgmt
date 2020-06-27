@@ -32,14 +32,14 @@ def to_usd(my_price):
 csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "exchange_traded_products.csv")
 df = pd.read_csv(csv_filepath)
 etp = df.to_dict("records")
-stock_list = [s["Ticker"] for s in etp]
+stock_list = [s["Identifier"] for s in etp]
 
 # evaluate ETPs held with latest price data
 MV_API = os.getenv("MV_API")
 
 #create dictionary to be used to store stock alerts
 alerts = []
-alerts.append({"Ticker": "Ticker", "% Change": "% Change", "Z Score": "Z Score"})
+alerts.append({"Identifier": "Identifier", "% Change": "% Change", "Z Score": "Z Score"})
 
 for stock in stock_list:
 
@@ -78,7 +78,7 @@ for stock in stock_list:
     
     
     #update dataframe with latest stock price
-    df.loc[df["Ticker"] == stock, ["Last Price"]] = last_close
+    df.loc[df["Identifier"] == stock, ["Last Price"]] = last_close
 
     #check if price has moved significantly
       
@@ -97,10 +97,10 @@ for stock in stock_list:
     
     if z_score >= 2.5 or z_score <= -2.5:
         send_alert = True
-        alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
+        alerts.append({"Identifier": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
     elif percent_change >= 5 or percent_change <= -5:
         send_alert = True
-        alerts.append({"Ticker": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
+        alerts.append({"Identifier": stock, "% Change": round(percent_change,2), "Z Score": round(z_score,2)})
     else:
         send_alert = False
     
@@ -121,7 +121,7 @@ if send_alert == True:
     for stock in alerts:
         html += f'''
         <tr>
-            <td>{stock['Ticker']}</td>
+            <td>{stock['Identifier']}</td>
             <td>{stock['% Change']}</td>
             <td>{stock['Z Score']}</td>
         </tr>
