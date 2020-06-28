@@ -1,7 +1,7 @@
 # user_interface.py
 # basic menus and decision-making around what user wants to do
 
-import tkinter
+import tkinter 
 from app.update_files import update_etp
 from app.update_files import update_asset
 from app.update_files import update_liability
@@ -9,7 +9,7 @@ from app.update_files import delete_etp
 from app.update_files import delete_liability
 from app.update_files import delete_asset
 import os
-import tkinter
+from tkinter.ttk import *
 import pandas as pd 
 
 #asset_class = "Equity"
@@ -52,13 +52,26 @@ current_value = 850000
 #
 #print ('Hello, world!') 
 #print (df)
+icon_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "16-168200_dollar-sign-image-money-clip-art-black-small.gif")
+#clipart sourced from http://clipart-library.com/clipart/dollar-cliparts_9.htm
 
 
+def open_new_window(window_name):
+    new_window =Toplevel(master)
+    newWindow.title("New Window")
+
+    # sets the geometry of toplevel
+    newWindow.geometry("200x200")
+
+    # A Label widget to show in toplevel
+    Label(newWindow,text="This is a new window").pack()
 
 # iniitalise GUI
-window = tkinter.Tk()
+master = tkinter.Tk()
+icon = tkinter.PhotoImage(file=icon_filepath)
+label = Label(master, image=icon, width=20)
 
-my_message = tkinter.Message(text='''Portfolio Performance & Reporting System v1.0 \n \n
+my_message = tkinter.Message(text='''Portfolio Performance & Reporting System v1.0 \n
                 Copyright Justin Davda 2020 \n''', width=1000)
 
 
@@ -117,17 +130,18 @@ def handle_button_click():
     #print("THE SELECTED DROPDOWN ITEM IS:",
     #      my_select.get(my_select.curselection()))
     
-
+def exit_button_click():
+    print("exit requested")
 
 my_button = tkinter.Button(text="OK", command=handle_button_click)
-
+exit_button = tkinter.Button(text="Exit", command=exit_button_click)
 #
 # BIND THE INDIVIDUAL COMPONENTS TO THE GUI WINDOW (PACK)
 # ... THEN LAUNCH THE GUI WINDOW (MAINLOOP)
 #
 
 my_message.pack()
-
+label.pack(pady = 10)
 #my_label.pack()
 #my_entry.pack()
 
@@ -144,6 +158,8 @@ my_radio_c.pack()
 #my_select_label.pack()
 #my_select.pack()
 #
-my_button.pack()
+exit_button.pack(side="bottom")
+my_button.pack(side="bottom")
+
 #
-window.mainloop()
+master.mainloop()
