@@ -1,7 +1,7 @@
 # user_interface.py
 # basic menus and decision-making around what user wants to do
-
-import tkinter 
+import tkinter
+from tkinter import Toplevel
 from app.update_files import update_etp
 from app.update_files import update_asset
 from app.update_files import update_liability
@@ -11,6 +11,8 @@ from app.update_files import delete_asset
 import os
 from tkinter.ttk import *
 import pandas as pd 
+
+from app import etp_update
 
 #asset_class = "Equity"
 #identifier = "GOOG"
@@ -55,22 +57,44 @@ current_value = 850000
 icon_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "16-168200_dollar-sign-image-money-clip-art-black-small.gif")
 #clipart sourced from http://clipart-library.com/clipart/dollar-cliparts_9.htm
 
+def update_button_click():
+    x = 1
 
 def open_new_window(window_name):
     new_window =Toplevel(master)
-    newWindow.title("New Window")
+    new_window.title("Edit Data")
 
     # sets the geometry of toplevel
-    newWindow.geometry("200x200")
+    #newWindow.geometry("200x200")
 
     # A Label widget to show in toplevel
-    Label(newWindow,text="This is a new window").pack()
+    #Label(newWindow,text="This is a new window").pack()
+    tkinter.Label(new_window, text="Which portfolio do you want to edit?", width=30, height=10).pack()
+
+    update_radio_label = tkinter.Label(new_window,text="Please select one of the following options:")
+
+
+    update_radio_value = tkinter.StringVar()
+    my_radio_x = tkinter.Radiobutton(new_window,
+        text="Exchange Traded Products", value="X", variable=update_radio_value)
+    my_radio_y = tkinter.Radiobutton(new_window,
+        text="Other Assets", value="Y", variable=update_radio_value)
+    my_radio_z = tkinter.Radiobutton(new_window,
+        text="Liabilities", value="Z", variable=update_radio_value)
+    
+    update_button = tkinter.Button(new_window, text="OK", command=update_button_click)
+
+    update_radio_label.pack()
+    my_radio_x.pack()
+    my_radio_y.pack()
+    my_radio_z.pack()
+    update_button.pack(side="bottom")
 
 # iniitalise GUI
 master = tkinter.Tk()
 icon = tkinter.PhotoImage(file=icon_filepath)
 label = Label(master, image=icon, width=20)
-
+master.title("Main Menu")
 my_message = tkinter.Message(text='''Portfolio Performance & Reporting System v1.0 \n
                 Copyright Justin Davda 2020 \n''', width=1000)
 
@@ -92,8 +116,8 @@ my_radio_b = tkinter.Radiobutton(
     text="Refresh Market Prices", value="B", variable=my_radio_value)
 my_radio_c = tkinter.Radiobutton(
     text="Update Assets & Liabilities", value="C", variable=my_radio_value)
-my_radio_d = tkinter.Radiobutton(
-    text="Exit Program", value="D", variable=my_radio_value)
+#my_radio_d = tkinter.Radiobutton(
+#       text="Exit Program", value="D", variable=my_radio_value)
 # CHECKBUTTONS
 
 #my_checkbox_group_label = tkinter.Label(
@@ -121,17 +145,26 @@ my_radio_d = tkinter.Radiobutton(
 
 
 def handle_button_click():
-    print("------------------------------")
-    print("NICE. YOU CLICKED THE BUTTON")
-    #print("THE ENTRY'S INPUT VALUE IS:", my_entry.get())
-    print("THE SELECTED RADIO BUTTON'S VALUE IS:", my_radio_value.get())
+    #print("------------------------------")
+    #print("NICE. YOU CLICKED THE BUTTON")
+    ##print("THE ENTRY'S INPUT VALUE IS:", my_entry.get())
+    #print("THE SELECTED RADIO BUTTON'S VALUE IS:", my_radio_value.get())
+    if my_radio_value.get() == "A":
+        etp_update()
+        
+
+    elif my_radio_value.get() == "B":
+        x = 1
+    elif my_radio_value.get() == "C":
+        window_name = "C"
+        open_new_window(window_name)
     #print("THE CHECKBOX ON/OFF VALUES FOR A, B, C, RESPECTIVELY, ARE:",
     #      [my_checkbox_a_val.get(), my_checkbox_b_val.get(), my_checkbox_c_val.get()])
     #print("THE SELECTED DROPDOWN ITEM IS:",
     #      my_select.get(my_select.curselection()))
     
 def exit_button_click():
-    print("exit requested")
+    exit()
 
 my_button = tkinter.Button(text="OK", command=handle_button_click)
 exit_button = tkinter.Button(text="Exit", command=exit_button_click)
