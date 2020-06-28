@@ -1,7 +1,8 @@
 # user_interface.py
 # basic menus and decision-making around what user wants to do
 import tkinter
-from tkinter import Toplevel
+from tkinter import *
+#import tkinter as tk
 from app.update_files import update_etp
 from app.update_files import update_asset
 from app.update_files import update_liability
@@ -15,22 +16,8 @@ import pandas as pd
 from app.etp_update import update_etp
 from app.create_report import report_create
 
-#asset_class = "Equity"
-#identifier = "GOOG"
-#units = 10
-#purchase_price = 100#
+icon_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "16-168200_dollar-sign-image-money-clip-art-black-small.gif")
 
-##update_ETP(asset_class, identifier, units, purchase_price)#
-
-#delete_etp(identifier)
-
-#asset_class = "Real Estate"
-#identifier = "Hamptons"
-#purchase_price = 600000
-#current_value = 850000
-
-#update_asset(asset_class, identifier, current_value)
-#delete_asset(identifier)
 
 
 #THIS CODE WORKS TO DISPLAY TABLE!
@@ -55,33 +42,110 @@ from app.create_report import report_create
 #
 #print ('Hello, world!') 
 #print (df)
-icon_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "16-168200_dollar-sign-image-money-clip-art-black-small.gif")
-#clipart sourced from http://clipart-library.com/clipart/dollar-cliparts_9.htm
 
-def update_button_click():
-    x = 1
+
+#clipart sourced from http://clipart-library.com/clipart/dollar-cliparts_9.htm
+#df printing in tkinter from https://stackoverflow.com/questions/26629695/how-to-display-content-of-pandas-data-frame-in-tkinter-gui-window
+
+def open_etp_window():
+    etp_window =Toplevel(master)
+    etp_window.title("Exchange Traded Products")
+    etp_message = tkinter.Message(etp_window, text='''                                                                    Add, edit or delete records.\n
+    Enter all fields to add a new record.  Enter existing Identifier and fields to change in order to amend a row,
+                                                                or just the Identifier to delete \n''', width=700)
+    etp_message.pack(side="top")
+    #get user input
+    #asset_class,identifier,units,purchase_price
+    
+    #asset class
+    asset_label = tkinter.Label(etp_window, text="Asset Class:")
+    asset_entry_value = tkinter.StringVar()
+    asset_entry = tkinter.Entry(etp_window, textvariable=asset_entry_value)
+    asset_class = asset_entry.get()
+    asset_label.pack()
+    asset_entry.pack()
+    
+    #identifier
+    id_label = tkinter.Label(etp_window, text="Identifier:")
+    id_entry_value = tkinter.StringVar()
+    id_entry = tkinter.Entry(etp_window, textvariable=id_entry_value)
+    identifier = id_entry.get()
+    id_label.pack()
+    id_entry.pack()
+
+    #units
+    units_label = tkinter.Label(etp_window, text="Units:")
+    units_entry_value = tkinter.StringVar()
+    units_entry = tkinter.Entry(etp_window, textvariable=units_entry_value)
+    units = units_entry.get()
+    units_label.pack()
+    units_entry.pack()
+
+    #purchase price
+    purchase_label = tkinter.Label(etp_window, text="Purchase Price:")
+    purchase_entry_value = tkinter.StringVar()
+    purchase_entry = tkinter.Entry(etp_window, textvariable=purchase_entry_value)
+    purchase_price = purchase_entry.get()
+    purchase_label.pack()
+    purchase_entry.pack()
+
+    def etp_button_click():
+        x = 1
+        #if my_radio_value.get() == "A":
+        #    report_create()
+            #print("report created") 
+
+    print(asset_class, identifier, units, purchase_price)
+
+    etp_button = tkinter.Button(etp_window,text="Enter", command=etp_button_click)
+    etp_button.pack()
+
+    #show current file
+    tkinter.Label(etp_window, text="\n Exchange Traded Product Holdings").pack()
+    etp_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "exchange_traded_products.csv")
+    df = pd.read_csv(etp_filepath)
+    
+    t1 = Text(etp_window) 
+    t1.pack() 
+    
+    class PrintToT1(object): 
+     def write(self, s): 
+         t1.insert(END, s) 
+    sys.stdout = PrintToT1()
+    print (df)
 
 def open_new_window(window_name):
     new_window =Toplevel(master)
+    #new_window = tkinter.tk()
     new_window.title("Edit Data")
+    icon = tkinter.PhotoImage(file=icon_filepath)
+    new_label = Label(new_window, image=icon, width=20)
 
-    # sets the geometry of toplevel
-    #newWindow.geometry("200x200")
-
-    # A Label widget to show in toplevel
-    #Label(newWindow,text="This is a new window").pack()
-    tkinter.Label(new_window, text="Which portfolio do you want to edit?", width=30, height=10).pack()
+    tkinter.Label(new_window, text="Which portfolio do you want to edit?").pack()
 
     update_radio_label = tkinter.Label(new_window,text="Please select one of the following options:")
-
-
-    update_radio_value = tkinter.StringVar()
+    update_radio_value = tkinter.StringVar(new_window)
     my_radio_x = tkinter.Radiobutton(new_window,
         text="Exchange Traded Products", value="X", variable=update_radio_value)
     my_radio_y = tkinter.Radiobutton(new_window,
         text="Other Assets", value="Y", variable=update_radio_value)
     my_radio_z = tkinter.Radiobutton(new_window,
         text="Liabilities", value="Z", variable=update_radio_value)
+        
+    def update_button_click():
+        #print("THE SELECTED RADIO BUTTON'S VALUE IS:", update_radio_value.get())
+        #exit()
+
+        if update_radio_value.get() == "X":
+            #print("x")
+            open_etp_window()
+    
+        elif update_radio_value.get() == "Y":
+            print("y")
+  
+        elif update_radio_value.get() == "Z":
+            print("z")
+
     
     update_button = tkinter.Button(new_window, text="OK", command=update_button_click)
 
@@ -90,6 +154,10 @@ def open_new_window(window_name):
     my_radio_y.pack()
     my_radio_z.pack()
     update_button.pack(side="bottom")
+    new_label.pack(pady=10,side="top")
+    #return update_radio_value
+
+
 
 # iniitalise GUI
 master = tkinter.Tk()
@@ -143,8 +211,6 @@ my_radio_c = tkinter.Radiobutton(
 #my_select.insert(6, "Sixth Item")
 
 # BUTTON
-
-
 def handle_button_click():
     #print("------------------------------")
     #print("NICE. YOU CLICKED THE BUTTON")
@@ -152,12 +218,12 @@ def handle_button_click():
     #print("THE SELECTED RADIO BUTTON'S VALUE IS:", my_radio_value.get())
     if my_radio_value.get() == "A":
         report_create()
-        print("report created")       
+        #print("report created")       
 
     elif my_radio_value.get() == "B":
         update_etp()
-        print("data refreshed")
-        
+        #print("data refreshed")
+
     elif my_radio_value.get() == "C":
         window_name = "C"
         open_new_window(window_name)
