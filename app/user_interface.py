@@ -12,7 +12,8 @@ import os
 from tkinter.ttk import *
 import pandas as pd 
 
-from app import etp_update
+from app.etp_update import update_etp
+from app.create_report import report_create
 
 #asset_class = "Equity"
 #identifier = "GOOG"
@@ -23,10 +24,10 @@ from app import etp_update
 
 #delete_etp(identifier)
 
-asset_class = "Real Estate"
-identifier = "Hamptons"
-purchase_price = 600000
-current_value = 850000
+#asset_class = "Real Estate"
+#identifier = "Hamptons"
+#purchase_price = 600000
+#current_value = 850000
 
 #update_asset(asset_class, identifier, current_value)
 #delete_asset(identifier)
@@ -150,11 +151,13 @@ def handle_button_click():
     ##print("THE ENTRY'S INPUT VALUE IS:", my_entry.get())
     #print("THE SELECTED RADIO BUTTON'S VALUE IS:", my_radio_value.get())
     if my_radio_value.get() == "A":
-        etp_update()
-        
+        report_create()
+        print("report created")       
 
     elif my_radio_value.get() == "B":
-        x = 1
+        update_etp()
+        print("data refreshed")
+        
     elif my_radio_value.get() == "C":
         window_name = "C"
         open_new_window(window_name)
