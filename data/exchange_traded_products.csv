@@ -1,1 +1,4 @@
 Asset Class,Identifier,Units,Purchase Price,Last Price
+Equity,MSFT,100,50,20
+Equity,GOOG,1000,500,250
+Equity,IBM,10000,5000,10000
