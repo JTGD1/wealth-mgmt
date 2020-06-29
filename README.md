@@ -36,6 +36,7 @@ ALPHAVANTAGE_API_KEY="ABC123XYZ"
 ```sh
 SENDGRID_API_KEY="ABC123XYZ"
 ```
+and ensure that ".env" is a line in your *.gitignore* file (in the root directory for the application)
 
 4) Also populate the *.env* file with **your** and **your client's** email addresses and preferred salutations:
 
