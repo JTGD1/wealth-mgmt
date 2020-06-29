@@ -23,6 +23,7 @@ Software to aid with the reporting and monitoring of financial asset portfolios,
 
 *AlphaVantage*
 > ALPHAVANTAGE_API_KEY="ABC123XYZ"
+> 
 (where ABC123XYZ is your private key)
 
 *Sendgrid*
@@ -31,9 +32,11 @@ Software to aid with the reporting and monitoring of financial asset portfolios,
 4) Also populate the *.env* file with **your** and **your client's** email addresses and preferred salutations:
 
 > MY_EMAIL_ADDRESS="justin.davda@stern.nyu.edu"
+> 
 > CLIENT_EMAIL_ADDRESS="barney@stinson.com"
 > 
 > MY_NAME="Justin Davda"
+> 
 > CLIENT_NAME="Barney Stinson Esq."
 
 1) save the .env file in the main directory (i.e. not ~/app or ~/data)
