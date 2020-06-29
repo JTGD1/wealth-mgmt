@@ -1,5 +1,5 @@
 #packages needed for Wealth Mgmt app
-
+#(a large number of packages were used deliberately used in order to provide experience for the author)
 
 plotly
 os
@@ -17,4 +17,6 @@ operator
 csv
 altair
 altair_viewer
+plotly
 scipy
+tkinter
