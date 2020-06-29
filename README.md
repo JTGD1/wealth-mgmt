@@ -9,7 +9,9 @@ To run:
 
 1) install packages required:
    
-   '''pip install -r requirements.txt'''
+   '''python
+   pip install -r requirements.txt
+   '''
 
    (Please ensure you are in the program root directory, i.e. not /app or /data)
 
