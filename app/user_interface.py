@@ -13,17 +13,23 @@ import os
 from tkinter.ttk import *
 import pandas as pd 
 
-from app.etp_update import update_etp
+from app.etp_update import update_etps
 from app.create_report import report_create
 
 icon_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "16-168200_dollar-sign-image-money-clip-art-black-small.gif")
 
 #clipart sourced from http://clipart-library.com/clipart/dollar-cliparts_9.htm
-#df printing in tkinter from https://stackoverflow.com/questions/26629695/how-to-display-content-of-pandas-data-frame-in-tkinter-gui-window
-
+#help with df printing in tkinter from https://stackoverflow.com/questions/26629695/how-to-display-content-of-pandas-data-frame-in-tkinter-gui-window
+# other tkinter assistance (passing information from forms to functions) from: https://github.com/th679/Recipe-lookup/blob/master/app/recipe-search.py
 
 #window for editing etps
 def open_etp_window():
+
+    def update_etp_df():
+        etp_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "exchange_traded_products.csv")
+        df = pd.read_csv(etp_filepath)
+        print (df)
+
     etp_window =Toplevel(master)
     etp_window.title("Exchange Traded Products")
     etp_message = tkinter.Message(etp_window, text='''                                                                               Add, edit or delete records:\n
@@ -37,7 +43,7 @@ def open_etp_window():
     asset_label = tkinter.Label(etp_window, text="Asset Class:")
     asset_entry_value = tkinter.StringVar()
     asset_entry = tkinter.Entry(etp_window, textvariable=asset_entry_value)
-    asset_input = asset_entry.get()
+    #asset_input = asset_entry.get()
     asset_label.pack()
     asset_entry.pack()
     
@@ -45,7 +51,7 @@ def open_etp_window():
     id_label = tkinter.Label(etp_window, text="Identifier:")
     id_entry_value = tkinter.StringVar()
     id_entry = tkinter.Entry(etp_window, textvariable=id_entry_value)
-    id_input = id_entry.get()
+    #id_input = id_entry.get()
     id_label.pack()
     id_entry.pack()
 
@@ -53,7 +59,7 @@ def open_etp_window():
     units_label = tkinter.Label(etp_window, text="Units:")
     units_entry_value = tkinter.StringVar()
     units_entry = tkinter.Entry(etp_window, textvariable=units_entry_value)
-    units_input = units_entry.get()
+    #units_input = units_entry.get()
     units_label.pack()
     units_entry.pack()
 
@@ -61,22 +67,27 @@ def open_etp_window():
     purchase_label = tkinter.Label(etp_window, text="Purchase Price:")
     purchase_entry_value = tkinter.StringVar()
     purchase_entry = tkinter.Entry(etp_window, textvariable=purchase_entry_value)
-    purchase_input = purchase_entry.get()
+    #purchase_input = purchase_entry.get()
     purchase_label.pack()
     purchase_entry.pack()
 
     def add_etp_button_click():
+        asset_input = asset_entry.get()
+        id_input = id_entry.get()
+        units_input = units_entry.get()
+        purchase_input = purchase_entry.get()
         update_etp(asset_input, id_input, units_input, purchase_input)
-        print("etp updated")
-        print(df)
+        #print("etp updated")
+        update_etp_df()
 
     add_etp_button = tkinter.Button(etp_window,text="Add/Amend", command=add_etp_button_click)
     add_etp_button.pack()
 
     def del_etp_button_click():
+        id_input = id_entry.get()
         delete_etp(id_input)
-        print("etp deleted") 
-        print(df)   
+        #print("etp deleted") 
+        update_etp_df()   
 
     del_button = tkinter.Button(etp_window,text="Delete", command=del_etp_button_click)
     del_button.pack()
@@ -106,6 +117,12 @@ def open_etp_window():
 
 #window for editing other assets
 def open_asset_window():
+
+    def update_asset_df():
+        asset_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "other_assets.csv")
+        df = pd.read_csv(asset_filepath)
+        print(df)
+
     asset_window = Toplevel(master)
     asset_window.title("Other Assets")
     asset_message = tkinter.Message(asset_window, text='''                                                                               Add, edit or delete records:\n
@@ -119,7 +136,7 @@ def open_asset_window():
     asset_label = tkinter.Label(asset_window, text="Asset Class:")
     asset_entry_value = tkinter.StringVar()
     asset_entry = tkinter.Entry(asset_window, textvariable=asset_entry_value)
-    asset_input = asset_entry.get()
+    #asset_input = asset_entry.get()
     asset_label.pack()
     asset_entry.pack()
 
@@ -127,7 +144,7 @@ def open_asset_window():
     id_label = tkinter.Label(asset_window, text="Identifier:")
     id_entry_value = tkinter.StringVar()
     id_entry = tkinter.Entry(asset_window, textvariable=id_entry_value)
-    id_input = id_entry.get()
+    #id_input = id_entry.get()
     id_label.pack()
     id_entry.pack()
 
@@ -135,22 +152,28 @@ def open_asset_window():
     value_label = tkinter.Label(asset_window, text="Current Value:")
     value_entry_value = tkinter.StringVar()
     value_entry = tkinter.Entry(asset_window, textvariable=value_entry_value)
-    value_input = value_entry.get()
+    #value_input = value_entry.get()
     value_label.pack()
     value_entry.pack()
 
     def add_asset_button_click():
+        value_input = value_entry.get()
+        id_input = id_entry.get()
+        asset_input = asset_entry.get()
+        
         update_asset(asset_input, id_input, value_input)
-        print("asset updated")
-        print(df)
+    
+        #print(id_input,"updated")
+        update_asset_df()
 
     add_asset_button = tkinter.Button(asset_window, text="Add/Amend", command=add_asset_button_click)
     add_asset_button.pack()
 
     def del_asset_button_click():
+        id_input = id_entry.get()
         delete_asset(id_input)
-        print("asset deleted")
-        print(df)
+        #print(id_input,"deleted")
+        update_asset_df()
 
     del_button = tkinter.Button(asset_window, text="Delete", command=del_asset_button_click)
     del_button.pack()
@@ -162,13 +185,12 @@ def open_asset_window():
     exit_asset_button.pack()
 
     #show current file
+    
     tkinter.Label(asset_window, text="\n Other Assets").pack()
     asset_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "other_assets.csv")
     df = pd.read_csv(asset_filepath)
-
     t1 = Text(asset_window)
     t1.pack()
-
     class PrintToT1(object):
      def write(self, s):
          t1.insert(END, s)
@@ -178,6 +200,12 @@ def open_asset_window():
 
 #window for editing liabilities 
 def open_liab_window():
+
+    def update_liab_df():
+        liab_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "liabilities.csv")
+        df = pd.read_csv(liab_filepath)
+        print(df)
+
     liab_window = Toplevel(master)
     liab_window.title("Liabilities")
     liab_message = tkinter.Message(liab_window, text='''                                                                                       Add, edit or delete records:\n
@@ -191,7 +219,7 @@ def open_liab_window():
     asset_label = tkinter.Label(liab_window, text="Asset Class:")
     asset_entry_value = tkinter.StringVar()
     asset_entry = tkinter.Entry(liab_window, textvariable=asset_entry_value)
-    asset_input = asset_entry.get()
+    #asset_input = asset_entry.get()
     asset_label.pack()
     asset_entry.pack()
 
@@ -199,7 +227,7 @@ def open_liab_window():
     id_label = tkinter.Label(liab_window, text="Identifier:")
     id_entry_value = tkinter.StringVar()
     id_entry = tkinter.Entry(liab_window, textvariable=id_entry_value)
-    id_input = id_entry.get()
+    #id_input = id_entry.get()
     id_label.pack()
     id_entry.pack()
 
@@ -207,22 +235,27 @@ def open_liab_window():
     value_label = tkinter.Label(liab_window, text="Current Value:")
     value_entry_value = tkinter.StringVar()
     value_entry = tkinter.Entry(liab_window, textvariable=value_entry_value)
-    value_input = value_entry.get()
+    #value_input = value_entry.get()
     value_label.pack()
     value_entry.pack()
 
     def add_liab_button_click():
+        asset_input = asset_entry.get()
+        id_input = id_entry.get()
+        value_input = value_entry.get()
+
         update_liability(asset_input, id_input, value_input)
-        print("liability updated")
-        print(df)
+        #print("liability updated")
+        update_liab_df()
 
     add_liab_button = tkinter.Button(liab_window, text="Add/Amend", command=add_liab_button_click)
     add_liab_button.pack()
 
     def del_liab_button_click():
+        id_input = id_entry.get()
         delete_liability(id_input)
-        print("liability deleted")
-        print(df)
+        #print("liability deleted")
+        update_liab_df()
 
     del_button = tkinter.Button(liab_window, text="Delete", command=del_liab_button_click)
     del_button.pack()
@@ -254,13 +287,13 @@ def open_liab_window():
 def open_new_window():
     new_window =Toplevel(master)
     #new_window = tkinter.tk()
-    new_window.title("Edit Data")
+    new_window.title("Data Management")
     icon = tkinter.PhotoImage(file=icon_filepath)
     new_label = Label(new_window, image=icon, width=20)
 
     #select options + open new windows
 
-    tkinter.Label(new_window, text="Which portfolio do you want to edit?").pack()
+    tkinter.Label(new_window, text="Which portfolio do you want to review?").pack()
     new_label.pack(pady=10,side="top")
     update_radio_label = tkinter.Label(new_window,text="Please select one of the following options:")
     update_radio_value = tkinter.StringVar(new_window)
@@ -304,20 +337,21 @@ master = tkinter.Tk()
 icon = tkinter.PhotoImage(file=icon_filepath)
 label = Label(master, image=icon, width=20)
 master.title("Main Menu")
-my_message = tkinter.Message(text='''Portfolio Performance & Reporting System v1.0 \n
-                Copyright Justin Davda 2020 \n''', width=1000)
-
+#my_message = tkinter.Message(text='''Financial Health Toolkit v1.0 \n
+#Copyright Justin Davda 2020 \n''', width=1000, font ='bold')
+my_message = tkinter.Message(text='''Financial Health Toolkit v1.0''', width=1000, font='bold')
+my_message_2 = tkinter.Message(text='''Copyright Justin Davda 2020 \n \n''', width = 1000)
 
 # RADIO BUTTON SELECTION
 my_radio_label = tkinter.Label(
-    text="Please select one of the following options:")
+    text='''Please select one of the following options: \n''', font='underline')
 my_radio_value = tkinter.StringVar()
 my_radio_a = tkinter.Radiobutton(
-    text="View Asset Allocation & New Worth", value="A", variable=my_radio_value)
+    text="Data Visualisation:   View Asset Allocation + Net Worth", value="A", variable=my_radio_value)
 my_radio_b = tkinter.Radiobutton(
-    text="Refresh Market Prices", value="B", variable=my_radio_value)
+    text="Market Monitoring:   Screen Portfolio for Unusual Price Moves  ", value="B", variable=my_radio_value)
 my_radio_c = tkinter.Radiobutton(
-    text="Update Assets & Liabilities", value="C", variable=my_radio_value)
+    text='''Data Management: View + Edit Portfolio''', value="C", variable=my_radio_value)
 
 # BUTTONS
 def handle_button_click():
@@ -326,7 +360,7 @@ def handle_button_click():
         #print("report created")       
 
     elif my_radio_value.get() == "B":
-        update_etp()
+        update_etps()
         #print("data refreshed")
 
     elif my_radio_value.get() == "C":
@@ -343,6 +377,7 @@ exit_button = tkinter.Button(text="Exit", command=exit_button_click)
 #pack main window
 
 my_message.pack()
+my_message_2.pack()
 label.pack(pady = 10)
 
 my_radio_label.pack()

@@ -21,7 +21,7 @@ def report_create():
     df_etp = pd.read_csv(etp_filepath)
     df_etp["Value"] = df_etp["Units"] * df_etp["Last Price"]
     etp_total_value = df_etp["Value"].sum()
-
+    
     #calculate value of liabilities
     liability_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "liabilities.csv")
     df_liability = pd.read_csv(liability_filepath)
@@ -37,22 +37,23 @@ def report_create():
     #add ETP assets to other assets
     etp_assets_row = {"Asset Class": "Equity", "Current Value": etp_total_value}
     df_assets_by_asset = df_assets_by_asset.append(etp_assets_row, ignore_index=True)
-
+    
     #add assets to liabilities to create net worth
     df_net_assets = pd.concat([df_assets_by_asset, df_liabilities_by_asset],axis=0)
     df_net_assets = df_net_assets.groupby("Asset Class").sum().reset_index()
     pd.options.display.float_format = '${:,.2f}'.format
-    #print(df_net_assets.head())
-
+    
     #write data to records
     date = datetime.now().strftime("%m/%d/%Y")
+    
     net_worth_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "net_worth_history.csv")
     df_net_worth = pd.read_csv(net_worth_filepath)
-    #print(df_net_worth.head())
     last_date = df_net_worth.iloc[-1]["Date"]
+    
 
     if last_date == date:
-        print("File is up to date")
+        print("Data is up to date")
+        
     else:
         df_net_assets.insert(0, "Date", date)
         #print(df_net_assets.head())
@@ -73,6 +74,9 @@ def report_create():
     )
 
     history.show()
+
+    # n.b. browser window for second chart (plotly) will not be created until
+    # the browser window for the first one (altair) is closed!
 
     fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",
      title="Current Asset Allocation as of "+date, hover_data=["Current Value"], labels=["Asset Class"])

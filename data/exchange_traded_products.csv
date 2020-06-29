@@ -1,4 +1,6 @@
 Asset Class,Identifier,Units,Purchase Price,Last Price
-Equity,MSFT,100,50,196.33
-Equity,GOOG,1000,500,1359.9
-Equity,IBM,10000,5000,117.19
+Equity,MSFT,40,150,198.44
+Equity,GOOG,100,800,1394.97
+Equity,IBM,120,100,119.75
+Equity,T,160,25,29.91
+Equity,BAC,200,10,23.39

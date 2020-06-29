@@ -23,7 +23,7 @@ def to_usd(my_price):
     return f"${my_price: , .2f}"
 
 
-def update_etp():
+def update_etps():
 
 
     #load list of exchange traded products held
@@ -137,5 +137,5 @@ def update_etp():
         send_email(subject="Investment Portfolio Update: Large Price Change Alert", html=html)
 
 if __name__ == "__main__":
-    update_etp()
+    update_etps()
     print("run directly")

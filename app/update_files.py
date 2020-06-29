@@ -3,6 +3,7 @@
 # to allow for updating of csv files containing financial records
 
 #with help from https://medium.com/swlh/adding-and-updating-data-in-csv-file-via-flask-api-252babbc6381
+
 import os
 import pandas as pd 
 
@@ -30,8 +31,7 @@ def delete_item(identifier, df, filepath):
 
     else:
         action = "error!"
-
-    #print(identifier,action)
+    
     return action
 
 
@@ -61,7 +61,7 @@ def update_etp(asset_class,identifier,units,purchase_price):
         #if ticker already exists, just update units, purchase price
         
             df_etp.loc[df_etp["Identifier"] == identifier, ["Units"]] = units
-            df_etp.loc[df_etp["Identifier"] == identifier, ["Purchase Price"]] = round(purchase_price,2)
+            df_etp.loc[df_etp["Identifier"] == identifier, ["Purchase Price"]] = round(float(purchase_price),2)
             isThere = True
     
         #if ticker doesn't exist, add it to the end
@@ -69,7 +69,7 @@ def update_etp(asset_class,identifier,units,purchase_price):
         if isThere != True:
             df2 = pd.DataFrame({"Asset Class":[asset_class], 
             "Identifier":[identifier], 
-            "Units":[units],"Purchase Price":[purchase_price]}) 
+            "Units":[units],"Purchase Price":[round(float(purchase_price),2)]}) 
 
             dff = df_etp.append(df2, ignore_index = True)
             dff.to_csv(etp_filepath, index = False)
@@ -81,7 +81,7 @@ def update_etp(asset_class,identifier,units,purchase_price):
             df_etp.to_csv(etp_filepath, index = False) 
             action = "updated"
         
-    #print(identifier,action)
+    print(identifier,action)
     return action   
 
 def delete_etp(identifier):
@@ -91,6 +91,7 @@ def delete_etp(identifier):
     
     delete_item(identifier, df, filepath)
     action = "deleted"
+    print(identifier, action)
     return action
 
 
@@ -100,7 +101,8 @@ def delete_asset(identifier):
     df = pd.read_csv(filepath)
 
     delete_item(identifier, df, filepath)
-    #action = "deleted"
+    action = "deleted"
+    print(identifier, action)
     return action
     
 
@@ -110,7 +112,8 @@ def delete_liability(identifier):
     df = pd.read_csv(filepath)
 
     delete_item(identifier, df, filepath)
-    #action = "deleted"
+    action = "deleted"
+    print(identifier, action)
     return action
 
 def update_asset(asset_class,identifier,current_value):
@@ -137,7 +140,7 @@ def update_asset(asset_class,identifier,current_value):
 
         #if ticker already exists, just update current value
         
-            df_asset.loc[df_asset["Identifier"] == identifier, ["Current Value"]] = round(current_value,2)
+            df_asset.loc[df_asset["Identifier"] == identifier, ["Current Value"]] = round(float(current_value),2)
             isThere = True
     
         #if ticker doesn't exist, add it to the end and make purchase price = current value
@@ -145,7 +148,7 @@ def update_asset(asset_class,identifier,current_value):
         if isThere != True:
             df2 = pd.DataFrame({"Asset Class":[asset_class], 
             "Identifier":[identifier], 
-            "Purchase Value":[current_value],"Current Value":[current_value]}) 
+            "Purchase Value":[current_value],"Current Value":[round(float(current_value),2)]}) 
 
             dff = df_asset.append(df2, ignore_index = True)
             dff.to_csv(asset_filepath, index = False)
@@ -186,16 +189,15 @@ def update_liability(asset_class, identifier, current_value):
 
             #if ticker already exists, just update current value
 
-            df_liability.loc[df_asset["Identifier"] == identifier,
-                         ["Current Value"]] = round(current_value, 2)
+            df_liability.loc[df_liability["Identifier"] == identifier,
+                         ["Current Value"]] = round(float(current_value), 2)
             isThere = True
 
         #if ticker doesn't exist, add it to the end and make purchase price = current value
 
         if isThere != True:
             df2 = pd.DataFrame({"Asset Class": [asset_class],
-                                "Identifier": [identifier],
-                                "Purchase Value": [current_value], "Current Value": [current_value]})
+                                "Identifier": [identifier],"Current Value": [round(float(current_value),2)]})
 
             dff = df_liability.append(df2, ignore_index=True)
             dff.to_csv(liability_filepath, index=False)
@@ -204,7 +206,7 @@ def update_liability(asset_class, identifier, current_value):
 
         else:
 
-            df_liability.to_csv(asset_filepath, index=False)
+            df_liability.to_csv(liability_filepath, index=False)
             action = "updated"
 
     print(identifier, action)
