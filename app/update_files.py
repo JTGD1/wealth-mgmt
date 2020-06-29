@@ -91,7 +91,7 @@ def delete_etp(identifier):
     
     delete_item(identifier, df, filepath)
     action = "deleted"
-    return #action
+    return action
 
 
 def delete_asset(identifier):
