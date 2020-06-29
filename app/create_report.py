@@ -64,7 +64,14 @@ def report_create():
         x="Date",
         y="Current Value",
         color="Asset Class"
+    ).properties(title="Historical Net Worth + Asset Allocation")
+    history.configure_title(
+    fontSize=20,
+    font='Courier',
+    anchor='start',
+    color='gray'
     )
+
     history.show()
 
     fig = px.pie(df_net_assets, values="Current Value", names="Asset Class",

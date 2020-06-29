@@ -1,20 +1,10 @@
 #packages needed for Wealth Mgmt app
-#(a large number of packages were used deliberately used in order to provide experience for the author)
+#(a variety of packages were deliberately used in order to provide experience for the author)
 
-plotly
-os
-itertools
 pandas
 python-dotenv
-datetime
-statistics
-json
 requests
 sendgrid==6.0.5
-flask
-gunicorn
-operator
-csv
 altair
 altair_viewer
 plotly
