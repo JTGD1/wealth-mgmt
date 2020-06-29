@@ -9,25 +9,26 @@ To run:
 
 1) install packages required:
    
-   
-      pip install -r requirements.txt
-  
-
-  > pip install -r requirements.txt
+> pip install -r requirements.txt
 
    (Please ensure you are in the program root directory, i.e. not /app or /data)
 
 2) populate a local .env file with your AlphaVantage API key as follows:
    
-   ALPHAVANTAGE_API_KEY="ABC123XYZ"
+> ALPHAVANTAGE_API_KEY="ABC123XYZ"
 
    (where ABC123XYZ is your private key)
 
 3) save the .env file in the main directory (i.e. not ~/app or ~/data)
 
-4) from the Command Line, run the Python file robo_advisor.py in the ~/app directory
+4) from the Command Line, run the Python file app.py in the root (/wealth-mgmt) directory
+
+> python -m app.app
 
 5) Follow instructions on screen!
+
+
+To optionally set up automated alerting on large moves in the stocks and other exchange-traded products in your portfolio, follow steps below to setup a Heroku job:
     
     
     
