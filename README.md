@@ -2,6 +2,56 @@
 
 Software to aid in reporting on and monitoring of financial asset allocation and portfolio performance for Financial Advisors
 
+by Justin Davda
+
+
+To run:
+
+1) install packages required:
+   
+   '''pip install -r requirements.txt'''
+
+   (Please ensure you are in the program root directory, i.e. not /app or /data)
+
+2) populate a local .env file with your AlphaVantage API key as follows:
+   
+   ALPHAVANTAGE_API_KEY="ABC123XYZ"
+
+   (where ABC123XYZ is your private key)
+
+3) save the .env file in the main directory (i.e. not ~/app or ~/data)
+
+4) from the Command Line, run the Python file robo_advisor.py in the ~/app directory
+
+5) Follow instructions on screen!
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     Copyright (C) 2020  Justin Davda
 
     This program is free software: you can redistribute it and/or modify
