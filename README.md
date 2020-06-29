@@ -1,6 +1,6 @@
-# wealth-mgmt
+<h2>Portfolio Performance & Reporting System v1.0<h2>
 
-Software to aid in reporting on and monitoring of financial asset allocation and portfolio performance for Financial Advisors
+*Software to aid with the reporting and monitoring of financial asset portfolios, for Financial Advisors*
 
 by Justin Davda
 
