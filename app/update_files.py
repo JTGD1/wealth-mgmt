@@ -90,27 +90,28 @@ def delete_etp(identifier):
     df = pd.read_csv(filepath)
     
     delete_item(identifier, df, filepath)
-    return
+    action = "deleted"
+    return #action
 
 
 def delete_asset(identifier):
 
-    filepath = os.path.join(os.path.dirname(__file__),
-                            "..", "data", "other_assets.csv")
+    filepath = os.path.join(os.path.dirname(__file__),"..", "data", "other_assets.csv")
     df = pd.read_csv(filepath)
 
     delete_item(identifier, df, filepath)
-    return
+    #action = "deleted"
+    return action
     
 
 def delete_liability(identifier):
 
-    filepath = os.path.join(os.path.dirname(__file__),
-                            "..", "data", "liabilities.csv")
+    filepath = os.path.join(os.path.dirname(__file__),"..", "data", "liabilities.csv")
     df = pd.read_csv(filepath)
 
     delete_item(identifier, df, filepath)
-    return
+    #action = "deleted"
+    return action
 
 def update_asset(asset_class,identifier,current_value):
     #pull in data from csv

@@ -50,18 +50,18 @@ icon_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "16-168200
 def open_etp_window():
     etp_window =Toplevel(master)
     etp_window.title("Exchange Traded Products")
-    etp_message = tkinter.Message(etp_window, text='''                                                                    Add, edit or delete records.\n
-    Enter all fields to add a new record.  Enter existing Identifier and fields to change in order to amend a row,
-                                                                or just the Identifier to delete \n''', width=700)
+    etp_message = tkinter.Message(etp_window, text='''                                                                               Add, edit or delete records:\n
+    Enter all fields and a NEW identifier to ADD a new record.  Enter all fields and an EXISTING identifier in order to AMEND a row,
+                                                                                    or just the identifier to DELETE \n''', width=700)
     etp_message.pack(side="top")
-    #get user input
-    #asset_class,identifier,units,purchase_price
+    
+    #get user input  #asset_class,identifier,units,purchase_price
     
     #asset class
     asset_label = tkinter.Label(etp_window, text="Asset Class:")
     asset_entry_value = tkinter.StringVar()
     asset_entry = tkinter.Entry(etp_window, textvariable=asset_entry_value)
-    asset_class = asset_entry.get()
+    asset_input = asset_entry.get()
     asset_label.pack()
     asset_entry.pack()
     
@@ -69,7 +69,7 @@ def open_etp_window():
     id_label = tkinter.Label(etp_window, text="Identifier:")
     id_entry_value = tkinter.StringVar()
     id_entry = tkinter.Entry(etp_window, textvariable=id_entry_value)
-    identifier = id_entry.get()
+    id_input = id_entry.get()
     id_label.pack()
     id_entry.pack()
 
@@ -77,7 +77,7 @@ def open_etp_window():
     units_label = tkinter.Label(etp_window, text="Units:")
     units_entry_value = tkinter.StringVar()
     units_entry = tkinter.Entry(etp_window, textvariable=units_entry_value)
-    units = units_entry.get()
+    units_input = units_entry.get()
     units_label.pack()
     units_entry.pack()
 
@@ -85,20 +85,31 @@ def open_etp_window():
     purchase_label = tkinter.Label(etp_window, text="Purchase Price:")
     purchase_entry_value = tkinter.StringVar()
     purchase_entry = tkinter.Entry(etp_window, textvariable=purchase_entry_value)
-    purchase_price = purchase_entry.get()
+    purchase_input = purchase_entry.get()
     purchase_label.pack()
     purchase_entry.pack()
 
-    def etp_button_click():
-        x = 1
-        #if my_radio_value.get() == "A":
-        #    report_create()
-            #print("report created") 
+    def add_etp_button_click():
+        update_etp(asset_input, id_input, units_input, purchase_input)
+        print("etp updated")
+        print(df)
 
-    print(asset_class, identifier, units, purchase_price)
+    add_etp_button = tkinter.Button(etp_window,text="Add/Amend", command=add_etp_button_click)
+    add_etp_button.pack()
 
-    etp_button = tkinter.Button(etp_window,text="Enter", command=etp_button_click)
-    etp_button.pack()
+    def del_etp_button_click():
+        delete_etp(id_input)
+        print("etp deleted") 
+        print(df)   
+
+    del_button = tkinter.Button(etp_window,text="Delete", command=del_etp_button_click)
+    del_button.pack()
+
+    def exit_etp_button_click():
+        etp_window.destroy()  
+
+    exit_etp_button = tkinter.Button(etp_window,text="Exit", command=exit_etp_button_click)
+    exit_etp_button.pack()
 
     #show current file
     tkinter.Label(etp_window, text="\n Exchange Traded Product Holdings").pack()
@@ -122,7 +133,7 @@ def open_new_window(window_name):
     new_label = Label(new_window, image=icon, width=20)
 
     tkinter.Label(new_window, text="Which portfolio do you want to edit?").pack()
-
+    new_label.pack(pady=10,side="top")
     update_radio_label = tkinter.Label(new_window,text="Please select one of the following options:")
     update_radio_value = tkinter.StringVar(new_window)
     my_radio_x = tkinter.Radiobutton(new_window,
@@ -148,15 +159,19 @@ def open_new_window(window_name):
 
     
     update_button = tkinter.Button(new_window, text="OK", command=update_button_click)
-
+    
     update_radio_label.pack()
     my_radio_x.pack()
     my_radio_y.pack()
     my_radio_z.pack()
-    update_button.pack(side="bottom")
-    new_label.pack(pady=10,side="top")
-    #return update_radio_value
+    update_button.pack()
+    
 
+    def exit_edit_button_click():
+        new_window.destroy()  
+
+    exit_edit_button = tkinter.Button(new_window,text="Exit", command=exit_edit_button_click)
+    exit_edit_button.pack()
 
 
 # iniitalise GUI
