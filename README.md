@@ -9,7 +9,7 @@ Software to aid with the reporting and monitoring of financial asset portfolios,
 
 1) Create and activate a virtual environment (Anaconda is suggested):
 
-``` conda create -n wealth-env
+```conda create -n wealth-env
 conda activate wealth-env ```
 
 
