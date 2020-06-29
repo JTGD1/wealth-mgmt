@@ -9,41 +9,38 @@ Software to aid with the reporting and monitoring of financial asset portfolios,
 
 1) Create and activate a virtual environment (Anaconda is suggested):
 
-> conda create -n wealth-env
-> conda activate wealth-env
+``` conda create -n wealth-env
+conda activate wealth-env ```
 
 
 2) install packages required (e.g. using Pip):
    
-> pip install -r requirements.txt
+``` pip install -r requirements.txt ```
 
    (Please ensure you are in the program root directory, i.e. not /app or /data)
 
 3) populate a local *.env* file with the required API keys as follows:
 
 *AlphaVantage*
-> ALPHAVANTAGE_API_KEY="ABC123XYZ"
-> 
+``` ALPHAVANTAGE_API_KEY="ABC123XYZ" ```
+
 (where ABC123XYZ is your private key)
 
 *Sendgrid*
-> SENDGRID_API_KEY="ABC123XYZ"
+``` SENDGRID_API_KEY="ABC123XYZ" ```
 
 4) Also populate the *.env* file with **your** and **your client's** email addresses and preferred salutations:
 
-> MY_EMAIL_ADDRESS="justin.davda@stern.nyu.edu"
-> 
-> CLIENT_EMAIL_ADDRESS="barney@stinson.com"
-> 
-> MY_NAME="Justin Davda"
-> 
-> CLIENT_NAME="Barney Stinson Esq."
+``` MY_EMAIL_ADDRESS="justin.davda@stern.nyu.edu"
+CLIENT_EMAIL_ADDRESS="barney@stinson.com"
+MY_NAME="Justin Davda"
+CLIENT_NAME="Barney Stinson Esq." ```
 
 1) save the .env file in the main directory (i.e. not ~/app or ~/data)
 
 2) from the Command Line, run the Python file app.py in the root (/wealth-mgmt) directory
 
-> python -m app.app
+``` python -m app.app ```
 
 5) Follow the instructions on screen!
 
