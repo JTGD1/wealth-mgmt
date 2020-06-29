@@ -1,4 +1,4 @@
-<h2>Portfolio Performance & Reporting System v1.0<h2>
+**Portfolio Performance & Reporting System v1.0**
 
 *Software to aid with the reporting and monitoring of financial asset portfolios, for Financial Advisors*
 
