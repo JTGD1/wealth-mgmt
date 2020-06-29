@@ -1,11 +1,11 @@
 **Portfolio Performance & Reporting System v1.0**
 
-*Software to aid with the reporting and monitoring of financial asset portfolios, for Financial Advisors*
+Software to aid with the reporting and monitoring of financial asset portfolios, for Financial Advisors
 
-by Justin Davda
+*by Justin Davda*
 
 
-To run:
+**To run:**
 
 1) install packages required:
    
@@ -28,7 +28,7 @@ To run:
 5) Follow instructions on screen!
 
 
-To optionally set up automated alerting on large moves in the stocks and other exchange-traded products in your portfolio, follow steps below to setup a Heroku job:
+**To optionally set up automated alerting on large moves in the stocks and other exchange-traded products in your portfolio, follow steps below to setup a Heroku job:**
     
     
     
