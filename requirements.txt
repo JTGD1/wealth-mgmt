@@ -10,4 +10,4 @@ altair_viewer
 plotly
 scipy
 tkinter
-gunicorn
+
