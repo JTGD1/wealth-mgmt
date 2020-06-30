@@ -53,7 +53,7 @@ def update_etps():
         response_data = json.loads(response.text)
 
         key_list = list(response_data.keys())
-
+        
 
         # error checking on API call
 
@@ -70,13 +70,14 @@ def update_etps():
         # extract data from json response
         tsd = response_data["Time Series (Daily)"]
         dates = list(tsd.keys())
+        
 
         #last_day = response_data["Meta Data"]["3. Last Refreshed"]
         last_day = dates[0]
 
         stock_ticker = response_data["Meta Data"]["2. Symbol"]
         last_close = float(response_data["Time Series (Daily)"][last_day]["4. close"])
-
+        
 
         #update dataframe with latest stock price
         df.loc[df["Identifier"] == stock, ["Last Price"]] = last_close

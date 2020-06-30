@@ -2,6 +2,7 @@
 # basic menus and decision-making around what user wants to do
 import tkinter
 from tkinter import *
+from tkinter import messagebox
 #import tkinter as tk
 from app.update_files import update_etp
 from app.update_files import update_asset
@@ -356,11 +357,13 @@ my_radio_c = tkinter.Radiobutton(
 # BUTTONS
 def handle_button_click():
     if my_radio_value.get() == "A":
+        messagebox.showinfo("Please check your browser", "Two charts will be displayed: please close the first browser window to see the second one!")
         report_create()
         #print("report created")       
 
     elif my_radio_value.get() == "B":
         update_etps()
+        messagebox.showinfo("Prices Refreshed + Market Moves Analysed", "Please check your email for details of any alerts triggered!")
         #print("data refreshed")
 
     elif my_radio_value.get() == "C":
