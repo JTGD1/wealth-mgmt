@@ -59,8 +59,19 @@ python -m app.app
 
 
 **To optionally set up automated alerting on large moves in the stocks and other exchange-traded products in your portfolio, follow steps below to setup a Heroku job:**
-    
-    
+
+1) clone the *wealth-mgmt* repo from Github to your local machine 
+2) If you haven't yet done so, [install the Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up), and make sure you can login and list your applications.
+
+```sh
+heroku login # (first time access only)
+
+heroku apps # (if using Heroku for the first time this may be empty) 
+```    
+3) create a new application server
+```sh
+heroku create wealth-mgmt
+```
     
     
     
