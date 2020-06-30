@@ -60,7 +60,7 @@ python -m app.app
 
 **To optionally set up automated alerting on large moves in the stocks and other exchange-traded products in your portfolio, follow steps below to setup a Heroku job:**
 
-1) clone the *wealth-mgmt* repo from Github to your local machine 
+1) Clone the *wealth-mgmt* repo from Github to your local machine 
 2) If you haven't yet done so, [install the Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up), and make sure you can login and list your applications.
 
 ```sh
@@ -68,12 +68,30 @@ heroku login # (first time access only)
 
 heroku apps # (if using Heroku for the first time this may be empty) 
 ```    
-3) create a new application server
+3) Create a new Heroku application server
 ```sh
 heroku create wealth-mgmt
 ```
-    
-    
+4)  Configure Heroku environment variables using data from the *.env* file in the local environment
+```sh
+MV_API="blahblahblah"
+SENDGRID_API_KEY="yadayadayada"
+
+MY_EMAIL_ADDRESS="fred@flinstone.com"
+CLIENT_EMAIL_ADDRESS="barney@rubble.com"
+
+MY_NAME="Fred Flinstone"
+CLIENT_NAME="Barney Rubble"
+```
+5) Deploy application source code to Heroku
+```sh
+git push heroku master
+```
+6) Finally, log in to the Heroku dashboard on the web and configure the "Heroku Scheduler" to run the *etp_update.py* program every day at 10pm UTC (5pm EST).  The command to execute is:
+```sh
+python -m app.etp_update
+```
+7) You will now receive an email update if any of the stocks or other exchange traded products in your portfolio move by more than 5% or 2.5 standard deviations (based on trailing 90 day volatility) on any given day.
     
     
     
