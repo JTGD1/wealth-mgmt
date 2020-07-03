@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 load_dotenv()
 import pandas as pd 
 from scipy import stats
+import time
 
 from app.email_service import send_email
 from app import CLIENT_NAME
@@ -41,19 +42,23 @@ def update_etps():
     #create dictionary to be used to store stock alerts
     alerts = []
     alerts.append({"Identifier": "Identifier", "% Change": "% Change", "Z Score": "Z Score"})
+    count = 0
 
     for stock in stock_list:
-
+        count = count + 1
         # make API request for stock prices
 
-        request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + \
-            stock+"&outputsize=compact&apikey="+str(MV_API)
+        request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+stock+"&outputsize=compact&apikey="+str(MV_API)
         response = requests.get(request_url)
-
         response_data = json.loads(response.text)
 
         key_list = list(response_data.keys())
-        
+        if key_list[0] == "Note":
+            print("Taking a moment to let the API cool off ...")
+            time.sleep(60)
+            request_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+stock+"&outputsize=compact&apikey="+str(MV_API)
+            response = requests.get(request_url)
+            response_data = json.loads(response.text)
 
         # error checking on API call
 
@@ -64,20 +69,28 @@ def update_etps():
         # Alphavantage API returns this message if a GET request on an invalid ticker is successfully sent
         elif key_list[0] == 'Error Message':
             print("API call failure - Data for Ticker =",
-                  stock, "not found.  lease check ticker is correct in the csv file and try again.")
+                  stock, "not found.  Please check ticker is correct in the csv file and try again.")
             continue
 
         # extract data from json response
-        tsd = response_data["Time Series (Daily)"]
-        dates = list(tsd.keys())
+        #tsd = response_data["Time Series (Daily)"]
+        #dates = list(tsd.keys())
         
-
+        #tsd = response_data["Time Series (Daily)"]
+        print("fine here for ..")
+        if count == 1:
+            tsd = response_data["Time Series (Daily)"]
+            dates = list(tsd.keys())
+            #dates = list(response_data["Time Series (Daily)"].keys())
+            #dates = dates[0:22]
+        #breakpoint()
         #last_day = response_data["Meta Data"]["3. Last Refreshed"]
-        last_day = dates[0]
+        #last_day = dates[0]
+            last_day = response_data["Meta Data"]["3. Last Refreshed"][:10]
 
         stock_ticker = response_data["Meta Data"]["2. Symbol"]
         last_close = float(response_data["Time Series (Daily)"][last_day]["4. close"])
-        
+        print(stock_ticker)
 
         #update dataframe with latest stock price
         df.loc[df["Identifier"] == stock, ["Last Price"]] = last_close
@@ -87,7 +100,8 @@ def update_etps():
         close_prices = []
 
         for date in dates:
-            close_price = tsd[date]["4. close"]
+            #close_price = tsd[date]["4. close"]
+            close_price = response_data["Time Series (Daily)"][date]["4. close"]
             close_prices.append(float(close_price))
 
         z_scores = stats.zscore(close_prices)

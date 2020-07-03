@@ -15,7 +15,7 @@ def send_email(subject="[ETP Update] This is a test", html="<p>Testing, Testing,
     print("CLIENT:", type(client))
     print("SUBJECT:", subject)
     #print("HTML:", html)
-    message = Mail(from_email=MY_EMAIL, to_emails=MY_EMAIL,
+    message = Mail(from_email=MY_EMAIL, to_emails=CLIENT_EMAIL,
                    subject=subject, html_content=html)
     try:
         response = client.send(message)
