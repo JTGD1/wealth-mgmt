@@ -7,7 +7,7 @@ Software to aid with the reporting and monitoring of financial asset portfolios,
 
 **To run:**
 
-1) Create and activate a virtual environment (Anaconda is suggested):
+1) Create and activate a virtual environment e.g. in Gitbash (Anaconda is suggested):
 
 ```sh
 conda create -n wealth-env
