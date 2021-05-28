@@ -1,9 +1,18 @@
-**Financial Health Toolkit v1.0**
+**Portfoly v1.0**  *by Justin Davda*
 
-Software to aid with the reporting and monitoring of financial asset portfolios, for Financial Advisors
+Tools to help with the monitoring and analysis of diverse financial asset portfolios, for Financial Advisors and HNW individuals.
+This application offers the following features:
 
-*by Justin Davda*
+- Graphical display of point-in-time portfolio allocation across asset classes
+- Graphical display of historical trends in net worth history & asset allocation
+- Automatic email alerts for large prices moves on publically-traded assets
+- In-application portfolio construction and maintenance tools
 
+*Originally created as a term project for TECH 2335 (Programming in Python and the Fundamentals of Software Development) @ NYU Stern*
+
+
+##
+##
 
 **To run:**
 
