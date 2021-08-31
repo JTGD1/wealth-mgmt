@@ -1,4 +1,4 @@
-**Portfoly v1.0**  *by Justin Davda*
+**Portfolyo v1.0**  *by Justin Davda*
 
 Tools to help with the monitoring and analysis of diverse financial asset portfolios, for Financial Advisors and HNW individuals.
 This application offers the following features:
