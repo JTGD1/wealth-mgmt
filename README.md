@@ -11,6 +11,17 @@ This application offers the following features:
 *Originally created as a term project for TECH 2335 (Programming in Python and the Fundamentals of Software Development) @ NYU Stern*
 
 
+![](slide 1.PNG)
+![](slide 2.PNG)
+![](slide 3.PNG)
+![](slide 4.PNG)
+![](slide 5.PNG)
+![](slide 6.PNG)
+![](slide 7.PNG)
+![](slide 8.PNG)
+![](slide 9.PNG)
+![](slide 10.PNG)
+
 ##
 ##
 
