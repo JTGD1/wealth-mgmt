@@ -10,29 +10,31 @@ This application offers the following features:
 
 *Originally created as a term project for TECH 2335 (Programming in Python and the Fundamentals of Software Development) @ NYU Stern*
 
+##
 
-![](slide 1.png)
+![Slide 1](slide%201.png)
 
-![](slide 2.png)
+![Slide 2](slide%202.png)
 
-![](slide 3.png)
+![Slide 3](slide%203.png)
 
-![](slide 4.png)
+![Slide 4](slide%204.png)
 
-![](slide 5.png)
+![Slide 5](slide%205.png)
 
-![](slide 6.png)
+![Slide 6](slide%206.png)
 
-![](slide 7.png)
+![Slide 7](slide%207.png)
 
-![](slide 8.png)
+![Slide 8](slide%208.png)
 
-![](slide 9.png)
+![Slide 9](slide%209.png)
 
-![](slide 10.png)
+![Slide 10](slide%2010.png)
+
 
 ##
-##
+
 
 **To run:**
 
